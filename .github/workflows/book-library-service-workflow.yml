@@ -16,14 +16,14 @@ on:
         required: true
         default: 'warning'
       tags:
-        description: 'Test scenario tags'  
+        description: 'Book Library Service'  
 
 # Environment variables available to all jobs and steps in this workflow
 env:
   GITHUB_SHA: ${{ github.sha }}
   REGISTRY_HOSTNAME: docker.io
   DOCKER_USERNAME: abvijaykumar
-  IMAGE_NAME: bozo-book-library-service
+  IMAGE_NAME: book-library-service
   PORT: 5001
 
 jobs:
