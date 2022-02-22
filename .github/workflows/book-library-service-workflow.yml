@@ -22,7 +22,7 @@ on:
 env:
   GITHUB_SHA: ${{ github.sha }}
   REGISTRY_HOSTNAME: docker.io
-  DOCKER_USERNAME: abvijaykumar
+  DOCKER_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
   IMAGE_NAME: book-library-service
   PORT: 5001
 
