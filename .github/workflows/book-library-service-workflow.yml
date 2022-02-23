@@ -55,13 +55,28 @@ jobs:
        
     - name: Generating Kustomize files 
       uses: imranismail/setup-kustomize@v1
-    - run: |
-          kustomize edit set image app:$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+      
+    - run: |          
           ls -la
+          mkdir generated
+          cd generated
+          kustomize edit set image app:$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+          ls-la
           cat kustomization.yaml
           git config user.name "book-library-service-workflow GitHub Actions Bot"
           git config user.email "dummy@dummy.com"
           git status 
           git remote remove origin
           git commit -a -m "Set `app` image tag to"
-          git push --force --quiet "https://abvijaykumar:${{ secrets.API_TOKEN_GITHUB }}@github.com/abvijaykumar/book-library-kube-infra.git" main:main          
+
+    - name: Push kustomize file to Infra repository
+          uses: cpina/github-action-push-to-another-repository@main
+          env:
+            API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+          with:
+            source-directory: generated/
+            destination-github-username: 'abvijaykumar'
+            destination-repository-name: 'book-library-kube-infra'
+            user-email: vijjunoreply@test.com
+            commit-message: Generated Kustomize files from build $BUILD_NUMBER
+            target-branch: main 
