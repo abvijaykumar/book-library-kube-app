@@ -60,7 +60,7 @@ jobs:
           ls -la
           cd generated
           kustomize edit set image app:$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
-          ls-la
+          ls -la
           cat kustomization.yaml
           git config user.name "book-library-service-workflow GitHub Actions Bot"
           git config user.email "dummy@dummy.com"
