@@ -65,7 +65,7 @@ jobs:
     - name: Pull Kutomize files from the Infra repository
       uses: actions/checkout@v2
       with:
-       repository: https://github.com/abvijaykumar/book-library-kube-infra.git
+       repository: abvijaykumar/book-library-kube-infra
        path: /
        
     - name: Update Kustomize files 
