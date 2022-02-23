@@ -72,6 +72,12 @@ jobs:
       uses: imranismail/setup-kustomize@v1
     - run: |
           kustomize edit set image app:$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+          git --version
+          git config user.name "book-library-service-workflow GitHub Actions Bot"
+          git config user.email "vijjuk@gmail.com"
+          git status
+          git tag
+          git describe
           git add .
           git commit -m "Set `app` image tag to"
           git push
