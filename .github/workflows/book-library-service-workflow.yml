@@ -53,13 +53,15 @@ jobs:
        repository: abvijaykumar/book-library-kube-infra
 
        
-    - name: Update Kustomize files 
+    - name: Generating Kustomize files 
       uses: imranismail/setup-kustomize@v1
     - run: |
           kustomize edit set image app:$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
           ls -la
           cat kustomization.yaml
-          git --version
+    
+    - name: pushing hte kustomize files to infra repo
+    - run : |
           git config user.name "book-library-service-workflow GitHub Actions Bot"
           git config user.email "dummy@dummy.com"
           git status 
