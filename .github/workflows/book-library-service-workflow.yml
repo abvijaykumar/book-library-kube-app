@@ -45,22 +45,7 @@ jobs:
     - name: Print new build number
       run: echo "Build number is $BUILD_NUMBER"
 
-    # Build the Docker image
-    - name: Build with Docker
-      run: |
-        cd book-library-service
-        ./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.username=$DOCKER_USERNAME -Dquarkus.container-image.name=$IMAGE_NAME -Dquarkus.container-image.tag=$BUILD_NUMBER -Dquarkus.container-image.group=$DOCKER_USERNAME
-        docker images
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{secrets.DOCKERHUB_USERNAME}}
-        password: ${{secrets.DOCKERHUB_PASSWORD}}
-
-    # Push the image to IBM Container Registry
-    - name: Push the image to ICR
-      run: |
-        docker push $DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+   
     
     - name: Pull Kutomize files from the Infra repository
       uses: actions/checkout@v2
@@ -76,19 +61,8 @@ jobs:
           cat kustomization.yaml
           git --version
           git config user.name "book-library-service-workflow GitHub Actions Bot"
-          git config user.email "vijjuk@gmail.com"
+          git config user.email "dummy@dummy.com"
           git status 
           git commit -a -m "Set `app` image tag to"
+          git push https://${{ secrets.API_TOKEN_GITHUB }}@github.com/abvijaykumar/book-library-kube-infra.git
           
-    - name: Pushes to another repository
-      uses: cpina/github-action-push-to-another-repository@main
-      env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      with:
-          source-directory: '.'
-          destination-github-username: 'abvijaykumar'
-          destination-repository-name: 'book-library-kube-infra'
-          user-email: vijjuk@gmail.com
-          target-branch: main
-          target-directory: generated
-
