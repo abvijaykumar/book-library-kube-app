@@ -79,4 +79,16 @@ jobs:
           git config user.email "vijjuk@gmail.com"
           git status 
           git commit -a -m "Set `app` image tag to"
-          git push
+          
+    - name: Pushes to another repository
+      uses: cpina/github-action-push-to-another-repository@main
+      env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+          source-directory: '.'
+          destination-github-username: 'abvijaykumar'
+          destination-repository-name: 'book-library-kube-infra'
+          user-email: vijjuk@gmail.com
+          target-branch: main
+          target-directory: generated
+
