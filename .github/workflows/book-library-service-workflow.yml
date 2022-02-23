@@ -79,6 +79,5 @@ jobs:
           git config user.email "vijjuk@gmail.com"
           git status
           git tag
-          git describe
           git commit -m "Set `app` image tag to"
           git push
