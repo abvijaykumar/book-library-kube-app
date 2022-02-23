@@ -61,3 +61,17 @@ jobs:
     - name: Push the image to ICR
       run: |
         docker push $DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+    
+    - name: Pull Kutomize files from the Infra repository
+      uses: actions/checkout@v2
+      with:
+       repository: https://github.com/abvijaykumar/book-library-kube-infra.git
+       path: /
+       
+    - name: Update Kustomize files 
+      uses: imranismail/setup-kustomize@v1
+    - run: |
+          kustomize edit set image app:$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+          git add .
+          git commit -m "Set `app` image tag to"
+          git push
