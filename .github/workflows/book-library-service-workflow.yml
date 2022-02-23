@@ -58,7 +58,6 @@ jobs:
       
     - run: |          
           ls -la
-          mkdir generated
           cd generated
           kustomize edit set image app:$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
           ls-la
