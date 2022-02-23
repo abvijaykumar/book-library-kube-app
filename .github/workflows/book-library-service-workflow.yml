@@ -63,6 +63,8 @@ jobs:
           git config user.name "book-library-service-workflow GitHub Actions Bot"
           git config user.email "dummy@dummy.com"
           git status 
+          git remote remove origin
+          git remote add origin https://${{ secrets.API_TOKEN_GITHUB }}@github.com/abvijaykumar/book-library-kube-infra.git
           git commit -a -m "Set `app` image tag to"
-          git push https://${{ secrets.API_TOKEN_GITHUB }}@github.com/abvijaykumar/book-library-kube-infra.git
+          git push 
           
