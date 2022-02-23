@@ -70,10 +70,10 @@ jobs:
           git commit -a -m "Set `app` image tag to"
 
     - name: Push kustomize file to Infra repository
-          uses: cpina/github-action-push-to-another-repository@main
-          env:
+      uses: cpina/github-action-push-to-another-repository@main
+      env:
             API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-          with:
+      with:
             source-directory: generated/
             destination-github-username: 'abvijaykumar'
             destination-repository-name: 'book-library-kube-infra'
