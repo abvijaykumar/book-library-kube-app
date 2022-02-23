@@ -77,5 +77,6 @@ jobs:
           git --version
           git config user.name "book-library-service-workflow GitHub Actions Bot"
           git config user.email "vijjuk@gmail.com"
-          git commit -m "Set `app` image tag to"
+          git status 
+          git commit -a -m "Set `app` image tag to"
           git push
