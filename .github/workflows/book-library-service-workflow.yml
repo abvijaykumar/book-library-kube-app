@@ -45,12 +45,12 @@ jobs:
     - name: Print new build number
       run: echo "Build number is $BUILD_NUMBER"
 
-   
-    
+      
     - name: Pull Kutomize files from the Infra repository
       uses: actions/checkout@v2
       with:
        repository: abvijaykumar/book-library-kube-infra
+       token:  ${{ secrets.API_TOKEN_GITHUB }}
 
        
     - name: Generating Kustomize files 
@@ -67,15 +67,5 @@ jobs:
           git status 
           git remote remove origin
           git commit -a -m "Set `app` image tag to"
+          git push
 
-    - name: Push kustomize file to Infra repository
-      uses: cpina/github-action-push-to-another-repository@main
-      env:
-            API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      with:
-            source-directory: generated/
-            destination-github-username: 'abvijaykumar'
-            destination-repository-name: 'book-library-kube-infra'
-            user-email: vijjunoreply@test.com
-            commit-message: Generated Kustomize files from build $BUILD_NUMBER
-            target-branch: main 
