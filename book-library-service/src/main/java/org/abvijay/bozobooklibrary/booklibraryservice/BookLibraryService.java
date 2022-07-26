@@ -26,19 +26,6 @@ public class BookLibraryService {
     public List<BookLibrary> getBooksforUser(@QueryParam("userId") String userId) {
 
         List<BookLibrary> books = BookLibrary.listAll();
-        /*
-        try {
-            ObjectMapper objMapper = new ObjectMapper();
-
-            for (int i = 0; i < books.size(); i++) {
-                BookLibrary item = books.get(i);
-                String itemJson = objMapper.writeValueAsString(item);
-
-                redisClient.set(Arrays.asList(item.getUserID(), itemJson));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
         return books;
     }
 

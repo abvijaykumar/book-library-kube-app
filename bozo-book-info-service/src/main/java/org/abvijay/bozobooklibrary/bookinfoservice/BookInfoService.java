@@ -58,7 +58,7 @@ public class BookInfoService {
 
 			HttpResponse<String> response;
 			response = client.send(request, BodyHandlers.ofString());
-			 responseJson = response.body();
+			responseJson = response.body();
 
 			ObjectMapper objMapper = new ObjectMapper();
 			resp = objMapper.readValue(responseJson, BookInfoSearchResponse.class);
@@ -74,12 +74,8 @@ public class BookInfoService {
 				} else {
 					System.out.println("Not found");
 				}
-
-				
 				redisClient.set(Arrays.asList(item.getId(), itemJson));
 			}
-			
-
 		} catch (Exception e) {
 			responseJson = "{'error', '" + e.getMessage() + "'}";
 			e.printStackTrace();
