@@ -54,7 +54,7 @@ jobs:
       run: |
         cd bozo-book-info-service
         ./mvnw package -Dnative
-        docker build -f Dockerfile.native -t bozo-book-info-service  .
+        docker build -f Dockerfile.native -t $IMAGE_NAME:$BUILD_NUMBER  .
 
 #        ./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.username=$DOCKER_USERNAME -Dquarkus.container-image.name=$IMAGE_NAME -Dquarkus.container-image.tag=$BUILD_NUMBER -Dquarkus.container-image.group=$DOCKER_USERNAME
     - name: Login to Docker Hub
@@ -63,8 +63,8 @@ jobs:
         username: ${{secrets.DOCKERHUB_USERNAME}}
         password: ${{secrets.DOCKERHUB_PASSWORD}}
 
-    # Push the image to IBM Container Registry
-    - name: Push the image to ICR
+    # Push the image to Dockerhub
+    - name: Push the image to Dockerhub
       run: |
         docker push $DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
 
