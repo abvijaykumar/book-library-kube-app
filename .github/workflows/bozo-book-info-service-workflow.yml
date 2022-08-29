@@ -67,6 +67,6 @@ jobs:
     # Push the image to Dockerhub
     - name: Push the image to Dockerhub
       run: |
-        docker image push --all-tags docker.io/$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+        docker push docker.io/$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
 
     # Update infra code with the new build number
