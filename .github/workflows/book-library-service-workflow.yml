@@ -16,54 +16,71 @@ on:
         required: true
         default: 'warning'
       tags:
-        description: 'Book Library Service'  
+        description: 'Test scenario tags'  
 
 # Environment variables available to all jobs and steps in this workflow
 env:
   GITHUB_SHA: ${{ github.sha }}
+  IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
+  IBM_CLOUD_REGION: jp-tok
+  ICR_NAMESPACE: ${{ secrets.ICR_NAMESPACE }}
   REGISTRY_HOSTNAME: docker.io
-  DOCKER_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
-  IMAGE_NAME: book-library-service
+  DOCKER_USERNAME: abvijaykumar
+  IMAGE_NAME: bozo-book-library-service
+  IKS_CLUSTER: kvijay-kube-new-cluster
+  DEPLOYMENT_NAME: iks-test
   PORT: 5001
 
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
-    environment: development
+    environment: production
     steps:
 
     - name: Checkout
       uses: actions/checkout@v2
-      
-  
-    - name: Generate build number
-      uses: einaregilsson/build-number@v3
+
+    # Download and Install IBM Cloud CLI
+    - name: Install IBM Cloud CLI
+      run: |
+        curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
+        ibmcloud --version
+        ibmcloud config --check-version=false
+        ibmcloud plugin install -f kubernetes-service
+        ibmcloud plugin install -f container-registry
+
+    # Authenticate with IBM Cloud CLI
+    - name: Authenticate with IBM Cloud CLI
+      run: |
+        ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g Default
+        ibmcloud cr region-set "${IBM_CLOUD_REGION}"
+        ibmcloud cr login
+
+    # Build the Docker image
+    - name: Build with Docker
+      run: |
+        cd bozo-book-info-service
+        ./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.username=$DOCKER_USERNAME -Dquarkus.container-image.name=$IMAGE_NAME -Dquarkus.container-image.group=$DOCKER_USERNAME
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
       with:
-        token: ${{secrets.github_token}}        
+        username: ${{secrets.DOCKERHUB_USERNAME}}
+        password: ${{secrets.DOCKERHUB_PASSWORD}}
 
-    - name: Print new build number
-      run: echo "Build number is $BUILD_NUMBER"
+    # Push the image to IBM Container Registry
+    - name: Push the image to ICR
+      run: |
+        docker push $DOCKER_USERNAME/$IMAGE_NAME:latest
 
-      
-    - name: Pull Kutomize files from the Infra repository
-      uses: actions/checkout@v2
-      with:
-       repository: abvijaykumar/book-library-kube-infra
-       token:  ${{ secrets.API_TOKEN_GITHUB }}
-
-       
-    - name: Generating Kustomize files 
-      uses: imranismail/setup-kustomize@v1
-      
-    - run: |          
-          ls -la
-          kustomize edit set image app:$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
-          ls -la
-          cat kustomization.yaml
-          git config user.name "book-library-service-workflow GitHub Actions Bot"
-          git config user.email "dummy@dummy.com"
-          git status 
-          git commit -a -m "Set `app` image tag to"
-          git push
-
+    # Deploy the Docker image to the IKS cluster
+    - name: Deploy to IKS
+      run: |
+        ibmcloud ks cluster config --cluster $IKS_CLUSTER
+        kubectl config current-context
+        kubectl create deployment $DEPLOYMENT_NAME --image=$REGISTRY_HOSTNAME/$ICR_NAMESPACE/$IMAGE_NAME:$GITHUB_SHA --dry-run -o yaml > deployment.yaml
+        kubectl apply -f deployment.yaml
+        kubectl rollout status deployment/$DEPLOYMENT_NAME
+        kubectl create service loadbalancer $DEPLOYMENT_NAME --tcp=80:$PORT --dry-run=client -o yaml > service.yaml
+        kubectl apply -f service.yaml
+        kubectl get services -o wide

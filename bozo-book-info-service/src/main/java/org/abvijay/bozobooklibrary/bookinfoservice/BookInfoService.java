@@ -37,7 +37,7 @@ public class BookInfoService {
 	@ConfigProperty(name = "book.info.service.google.book.api.url")
 	String GOOGLE_API_URL;
 
-	@ConfigProperty(name = "book.info.service.google.book.api.key")
+	@ConfigProperty(name = "googleapikey")
 	String GOOGLE_API_KEY;
 
 	@ConfigProperty(name = "book.info.service.max.results.per.page")
