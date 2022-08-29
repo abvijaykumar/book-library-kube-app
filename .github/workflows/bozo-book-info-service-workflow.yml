@@ -54,7 +54,9 @@ jobs:
       run: |
         cd bozo-book-info-service
         ./mvnw package -Dnative
-        docker build -f Dockerfile.native -t $IMAGE_NAME:$BUILD_NUMBER  .
+        docker images
+        docker build -f Dockerfile.native -t $IMAGE_NAME:$BUILD_NUMBER .
+        docker images
 
 #        ./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.username=$DOCKER_USERNAME -Dquarkus.container-image.name=$IMAGE_NAME -Dquarkus.container-image.tag=$BUILD_NUMBER -Dquarkus.container-image.group=$DOCKER_USERNAME
     - name: Login to Docker Hub
