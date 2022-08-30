@@ -67,7 +67,8 @@ jobs:
     # Push the image to Dockerhub
     - name: Push the image to Dockerhub
       run: |
-        docker push $DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+        docker image tag $IMAGE_NAME:$BUILD_NUMBER docker.io/$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+        docker image push docker.io/$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
 
     # Invoke the infra gitops
     - name: Invoke book-info-service Infra GitOps pipe
