@@ -67,6 +67,19 @@ jobs:
     # Push the image to Dockerhub
     - name: Push the image to Dockerhub
       run: |
-        docker push docker.io/$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+        docker push $DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
 
-    # Update infra code with the new build number
+    # Invoke the infra gitops
+    - name: Invoke book-info-service Infra GitOps pipe
+      uses: peter-evans/repository-dispatch@v1
+      with:
+          token: ${{secrets.GITACTIONS_API_TOKEN}}
+          repository: abvijaykumar/book-library-kube-infra
+          event-type: deploy-book-info-service-infra
+          client-payload: '{"buildnumber": $BUILD_NUMBER}'
+#      run: |
+#          curl -H "Accept: application/vnd.github.everest-preview+json" \
+#          -H "Authorization: token ${{secrets.GITACTIONS_API_TOKEN}}" \
+#          --request POST \
+#          --data '{"event_type": "deploy-book-info-service-infra", "client_payload": { "buildnumber": "'"$BUILD_NUMBER"'" }}' \
+#          https://api.github.com/repos/abvijaykumar/book-library-kube-infra/dispatches

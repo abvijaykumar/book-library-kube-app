@@ -1,0 +1,7 @@
+
+
+curl -H "Accept: application/vnd.github.everest-preview+json" \
+    -H "Authorization: token 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" \
+    --request POST \
+    --data '{"event_type": "deploy-book-info-service-infra", "client_payload": { "buildnumber": "'"$BUILD_NUMBER"'" }}' \
+    https://api.github.com/repos/abvijaykumar/book-library-kube-infra/dispatches
