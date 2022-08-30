@@ -74,7 +74,7 @@ jobs:
     - name: Invoke book-info-service Infra GitOps pipe
       uses: peter-evans/repository-dispatch@v1
       with:
-          token: ${{secrets.GITACTIONS_API_TOKEN}}
+          token: ${{secrets.github_token}}
           repository: abvijaykumar/book-library-kube-infra
           event-type: deploy-book-info-service-infra
           client-payload: '{"buildnumber": "$BUILD_NUMBER"}'
