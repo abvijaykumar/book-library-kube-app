@@ -20,6 +20,7 @@ import io.vertx.redis.client.Response;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 
 import org.abvijay.bozobooklibrary.bookinfoservice.objects.BookInfoSearchResponse;
@@ -37,13 +38,18 @@ public class BookInfoService {
 	@ConfigProperty(name = "book.info.service.google.book.api.url")
 	String GOOGLE_API_URL;
 
-	@ConfigProperty(name = "googleapikey")
+	//@ConfigProperty(name = "googleapikey")
 	String GOOGLE_API_KEY;
 
 	@ConfigProperty(name = "book.info.service.max.results.per.page")
 	String MAX_RESULTS_PER_PAGE;
 
 	public BookInfoSearchResponse searchByKeyword(String query, int page) {
+		    Map<String, String> map = System.getenv();
+			System.out.println(">>>>ENV<<<<<");
+            System.out.println(map);
+			System.out.println(">>>>ENV<<<<<");
+			
 		BookInfoSearchResponse resp = new BookInfoSearchResponse();
 		System.out.println("Query "+ query);
 		String responseJson = "";
