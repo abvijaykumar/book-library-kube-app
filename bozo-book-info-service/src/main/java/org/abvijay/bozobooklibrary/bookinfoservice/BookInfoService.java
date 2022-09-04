@@ -46,9 +46,8 @@ public class BookInfoService {
 
 	public BookInfoSearchResponse searchByKeyword(String query, int page) {
 		    Map<String, String> map = System.getenv();
-			System.out.println(">>>>ENV<<<<<");
+			System.out.println(">>>>ENV");
             System.out.println(map);
-			System.out.println(">>>>ENV<<<<<");
 			
 		BookInfoSearchResponse resp = new BookInfoSearchResponse();
 		System.out.println("Query "+ query);
@@ -58,7 +57,9 @@ public class BookInfoService {
 					+ "&key=" + GOOGLE_API_KEY
 					+ "&maxResults="+MAX_RESULTS_PER_PAGE
 					+ "&startIndex="+ page*10;
-
+			
+			System.out.println("URL >>");
+			System.out.println(url);
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
 
