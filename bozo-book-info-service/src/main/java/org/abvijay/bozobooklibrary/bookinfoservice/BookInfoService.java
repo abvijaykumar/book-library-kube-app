@@ -45,10 +45,6 @@ public class BookInfoService {
 	String MAX_RESULTS_PER_PAGE;
 
 	public BookInfoSearchResponse searchByKeyword(String query, int page) {
-		    Map<String, String> map = System.getenv();
-			System.out.println(">>>>ENV");
-            System.out.println(map);
-			
 		BookInfoSearchResponse resp = new BookInfoSearchResponse();
 		System.out.println("Query "+ query);
 		String responseJson = "";
@@ -58,8 +54,6 @@ public class BookInfoService {
 					+ "&maxResults="+MAX_RESULTS_PER_PAGE
 					+ "&startIndex="+ page*10;
 			
-			System.out.println("URL >>");
-			System.out.println(url);
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
 
