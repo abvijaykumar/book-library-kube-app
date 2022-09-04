@@ -35,18 +35,9 @@ jobs:
     name: Development Build
     runs-on: ubuntu-latest
     environment: development
+
     steps:
-    - uses: ravsamhq/notify-slack-action@v2
-      if: always()
-      with:
-        status: ${{ job.status }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        notification_title: "{workflow} has {status_message}"
-        message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
-        footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
-        notify_when: "success,failure,warnings"
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
+    
     - name: Checkout the code
       uses: actions/checkout@v2
 
@@ -66,6 +57,19 @@ jobs:
         docker images
         docker build -f Dockerfile.native -t $IMAGE_NAME:$BUILD_NUMBER .
         docker images
+
+    - name: Build Status Slack Notification
+      uses: ravsamhq/notify-slack-action@v2
+      if: always()
+      with:
+        status: ${{ job.status }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        notification_title: "Build Status: {workflow} has {status_message}"
+        message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+        footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
+        notify_when: "failure, success, warning"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
     
 
     - name: Login to Docker Hub
@@ -80,6 +84,18 @@ jobs:
         docker image tag $IMAGE_NAME:$BUILD_NUMBER docker.io/$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
         docker image push docker.io/$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
 
+    - name: BuiDocker Build & Push  Status Slack Notification
+      uses: ravsamhq/notify-slack-action@v2
+      if: always()
+      with:
+        status: ${{ job.status }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        notification_title: "Docker Build & Push Status: {workflow} has {status_message}"
+        message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+        footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
+        notify_when: "failure, success, warning"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
 
 
     - name: Invoke book-info-service Infra GitOps pipe
