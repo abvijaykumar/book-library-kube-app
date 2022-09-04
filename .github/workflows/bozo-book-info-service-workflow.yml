@@ -55,7 +55,7 @@ jobs:
       with:
         status: ${{ job.status }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        notification_title: "Starting Build $BUILD_NUMBER"
+        notification_title: "Starting Build ${{BUILD_NUMBER}}"
         message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
         footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
         notify_when: "failure, success, warning"
@@ -77,7 +77,7 @@ jobs:
       with:
         status: ${{ job.status }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        notification_title: "Build Status: {workflow} has {status_message}"
+        notification_title: "Build Status: {status_message}"
         message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
         footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
         notify_when: "failure, success, warning"
@@ -103,7 +103,7 @@ jobs:
       with:
         status: ${{ job.status }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        notification_title: "Docker Build & Push Status: {workflow} has {status_message}"
+        notification_title: "Docker Build & Push Status: {status_message}"
         message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
         footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
         notify_when: "failure, success, warning"
@@ -118,3 +118,16 @@ jobs:
           --request POST \
           --data '{"event_type": "deploy-book-info-service-infra-updated-build", "client_payload": { "buildnumber": "'"$BUILD_NUMBER"'" }}' \
           https://api.github.com/repos/abvijaykumar/book-library-kube-infra/dispatches
+
+    - name: Invoked Infra Workflow Slack Notification
+      uses: ravsamhq/notify-slack-action@v2
+      if: always()
+      with:
+        status: ${{ job.status }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        notification_title: "Infra Workflow trigger Status: {status_message}"
+        message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+        footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
+        notify_when: "failure, success, warning"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
