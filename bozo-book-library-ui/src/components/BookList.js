@@ -15,7 +15,7 @@ const BookList = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     //const REACT_APP_BOOK_INFO_SERVICE_URL = process.env.REACT_APP_BOOK_INFO_SERVICE_URL;
-    const REACT_APP_BOOK_INFO_SERVICE_URL = "http://" + window.location.hostname + "/bookinfo";
+    const REACT_APP_BOOK_INFO_SERVICE_URL = "https://" + window.location.hostname + "/bookinfo";
     
     console.log("URL: " + REACT_APP_BOOK_INFO_SERVICE_URL);
 

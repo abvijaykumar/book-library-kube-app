@@ -83,9 +83,9 @@ jobs:
         docker push $DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
 
     # Deploy the Docker image to the IKS cluster
-    - name: Deploy to IKS
-      run: |
-        ibmcloud ks cluster config --cluster $IKS_CLUSTER
-        kubectl config current-context
-        kubectl config set-context --current --namespace=bozo-book-library-dev
-        kubectl set image deployment book-library-ui-deployments book-library-ui-service=$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER 
+    # - name: Deploy to IKS
+    #  run: |
+    #    ibmcloud ks cluster config --cluster $IKS_CLUSTER
+    #    kubectl config current-context
+    #    kubectl config set-context --current --namespace=bozo-book-library-dev
+    #    kubectl set image deployment book-library-ui-deployments book-library-ui-service=$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER 
