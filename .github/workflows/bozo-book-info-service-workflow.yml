@@ -37,7 +37,7 @@ jobs:
     environment: development
 
     steps:
-    
+
     - name: Checkout the code
       uses: actions/checkout@v2
 
@@ -48,6 +48,19 @@ jobs:
 
     - name: Print new build number
       run: echo "Build number is $BUILD_NUMBER"
+
+    - name: Starting Build & Push  Status Slack Notification
+      uses: ravsamhq/notify-slack-action@v2
+      if: always()
+      with:
+        status: ${{ job.status }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        notification_title: "Starting Build $BUILD_NUMBER"
+        message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+        footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
+        notify_when: "failure, success, warning"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
 
     # Build the Docker image
     - name: Build with Docker
