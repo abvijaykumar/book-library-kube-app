@@ -65,7 +65,7 @@ jobs:
     # Build the Docker image
     - name: Build with Docker
       run: |
-        cd bozo-book-info-service
+        cd book-library-service
         ./mvnw package -Dnative
         docker images
         docker build -f Dockerfile.native -t $IMAGE_NAME:$BUILD_NUMBER .
