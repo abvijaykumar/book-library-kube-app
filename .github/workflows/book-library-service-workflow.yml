@@ -62,8 +62,8 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
 
-    # Build the Docker image
-    - name: Build with Docker
+
+    - name: Build with Native Image and Dcokerizing it
       run: |
         cd book-library-service
         ./mvnw package -Dnative
@@ -107,4 +107,4 @@ jobs:
         notify_when: "failure, success, warning"
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
-
+   

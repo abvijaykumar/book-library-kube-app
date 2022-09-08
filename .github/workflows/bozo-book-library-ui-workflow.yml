@@ -41,22 +41,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # Download and Install IBM Cloud CLI
-    #- name: Install IBM Cloud CLI
-    #  run: |
-    #    curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
-    #    ibmcloud --version
-    #    ibmcloud config --check-version=false
-    #    ibmcloud plugin install -f kubernetes-service
-    #    ibmcloud plugin install -f container-registry
-
-    # Authenticate with IBM Cloud CLI
-    #- name: Authenticate with IBM Cloud CLI
-    #  run: |
-    #    ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g Default
-    #    ibmcloud cr region-set "${IBM_CLOUD_REGION}"
-    #    ibmcloud cr login
-
     - name: Generate build number
       uses: einaregilsson/build-number@v3
       with:
@@ -81,11 +65,3 @@ jobs:
     - name: Push the image to ICR
       run: |
         docker push $DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
-
-    # Deploy the Docker image to the IKS cluster
-    # - name: Deploy to IKS
-    #  run: |
-    #    ibmcloud ks cluster config --cluster $IKS_CLUSTER
-    #    kubectl config current-context
-    #    kubectl config set-context --current --namespace=bozo-book-library-dev
-    #    kubectl set image deployment book-library-ui-deployments book-library-ui-service=$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER 
