@@ -13,6 +13,11 @@ on:
       - main
     paths:
       - 'book-library-service/**'
+  
+  workflow_dispatch:
+    name:
+      description: 'Test scenario tags'  
+
 # Environment variables available to all jobs and steps in this workflow
 env:
   GITHUB_SHA: ${{ github.sha }}
