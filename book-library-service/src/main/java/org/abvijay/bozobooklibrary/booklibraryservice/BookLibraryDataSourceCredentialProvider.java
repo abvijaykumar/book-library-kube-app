@@ -18,7 +18,7 @@ public class BookLibraryDataSourceCredentialProvider  implements CredentialsProv
 		Map<String, String> properties = new HashMap<>();
 
         String dbUser = System.getenv("dbUser");
-        String dbPasswrod = System.getenv("dbPassword");
+        String dbPassword = System.getenv("dbPassword");
 
 
 		properties.put(USER_PROPERTY_NAME, dbUser);
