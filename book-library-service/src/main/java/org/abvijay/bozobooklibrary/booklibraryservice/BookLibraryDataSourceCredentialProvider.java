@@ -20,6 +20,7 @@ public class BookLibraryDataSourceCredentialProvider  implements CredentialsProv
         String dbUser = System.getenv("dbUser");
         String dbPassword = System.getenv("dbPassword");
 
+        System.out.println(dbUser);
 
 		properties.put(USER_PROPERTY_NAME, dbUser);
 		properties.put(PASSWORD_PROPERTY_NAME, dbPassword);
