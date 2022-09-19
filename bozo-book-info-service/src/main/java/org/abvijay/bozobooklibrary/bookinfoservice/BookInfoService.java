@@ -65,7 +65,7 @@ public class BookInfoService {
 			resp = objMapper.readValue(responseJson, BookInfoSearchResponse.class);
 			System.out.println(resp.getTotalItems());
 
-			for(int i=0; i< resp.getItems().size(); i++) {
+			for(int i=0; i< resp.getTotalItems(); i++) {
 				BookItem item = resp.getItems().get(i);
 				String itemJson = objMapper.writeValueAsString(item);
 
