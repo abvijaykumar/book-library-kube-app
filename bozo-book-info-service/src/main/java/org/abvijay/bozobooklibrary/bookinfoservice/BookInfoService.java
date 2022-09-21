@@ -1,28 +1,19 @@
 package org.abvijay.bozobooklibrary.bookinfoservice;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.quarkus.redis.client.RedisClient;
+import io.quarkus.redis.client.reactive.ReactiveRedisClient;
+import io.vertx.redis.client.Response;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.quarkus.redis.client.RedisClient;
-import io.quarkus.redis.client.reactive.ReactiveRedisClient;
-import io.vertx.redis.client.Response;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import javax.inject.Inject;
-
+import javax.ws.rs.Path;
 import org.abvijay.bozobooklibrary.bookinfoservice.objects.BookInfoSearchResponse;
 import org.abvijay.bozobooklibrary.bookinfoservice.objects.BookItem;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -113,7 +104,7 @@ public class BookInfoService {
 					responseJson = response.body();
 
 					System.out.println("URL: "+ url);
-					System.out.println("Resoinse JSON :" + responseJson);
+					System.out.println("Response JSON :" + responseJson);
 					
 					BookItem item = objMapper.readValue(responseJson, BookItem.class);
 					items.add(item);
