@@ -130,7 +130,7 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
 
   ProdDeploy:
-    name: Development Build
+    name: Production Build
     needs: [DevDeploy]
     runs-on: ubuntu-latest
     environment: production
