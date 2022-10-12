@@ -99,8 +99,8 @@ public class BookInfoService {
 					items.add(item);
 
 					String itemJson = objMapper.writeValueAsString(item);
-				//	redisClient.set(Arrays.asList(item.getId(), itemJson));
-				//}
+					redisClient.set(Arrays.asList(item.getId(), itemJson));
+				}
 
 			}
 
