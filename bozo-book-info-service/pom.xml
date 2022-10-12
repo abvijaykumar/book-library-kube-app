@@ -70,6 +70,11 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-logging-loki</artifactId>
+      <version>919-SNAPSHOT</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
