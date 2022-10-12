@@ -2,7 +2,6 @@ package org.abvijay.bozobooklibrary.bookinfoservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.redis.client.RedisClient;
-import io.quarkus.redis.client.reactive.ReactiveRedisClient;
 import io.vertx.redis.client.Response;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -22,9 +21,6 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 public class BookInfoService {
 	@Inject
     RedisClient redisClient;
-
-	@Inject
-    ReactiveRedisClient reactiveRedisClient; 
 
 	@ConfigProperty(name = "book.info.service.google.book.api.url")
 	String GOOGLE_API_URL;
@@ -59,13 +55,6 @@ public class BookInfoService {
 			for(int i=0; i< resp.getTotalItems(); i++) {
 				BookItem item = resp.getItems().get(i);
 				String itemJson = objMapper.writeValueAsString(item);
-
-				Response cachedItem  = redisClient.get(item.getId());
-				if(cachedItem != null ) {
-					System.out.println("Found");
-				} else {
-					System.out.println("Not found");
-				}
 				redisClient.set(Arrays.asList(item.getId(), itemJson));
 			}
 		} catch (Exception e) {
@@ -86,12 +75,12 @@ public class BookInfoService {
 			ObjectMapper objMapper = new ObjectMapper();
 			for (int i=0; i<bookids.size(); i++) {
 
-				/*Response cachedItem  = redisClient.get(bookids.get(i));
+				Response cachedItem  = redisClient.get(bookids.get(i));
 				if(cachedItem != null ) {
 					System.out.println("Found " + cachedItem.toString());
 					BookItem item = objMapper.readValue(cachedItem.toString(), BookItem.class);
 					items.add(item);
-				} else {*/
+				} else {
 					System.out.println("Not found");
 					String url = GOOGLE_API_URL + "/"+ bookids.get(i)
 					+ "?key="+GOOGLE_API_KEY;
