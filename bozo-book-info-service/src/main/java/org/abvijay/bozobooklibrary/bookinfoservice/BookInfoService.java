@@ -37,7 +37,6 @@ public class BookInfoService {
 
 	public BookInfoSearchResponse searchByKeyword(String query, int page) {
 		BookInfoSearchResponse resp = new BookInfoSearchResponse();
-		System.out.println("Query "+ query);
 		String responseJson = "";
 		try {
 			String url = GOOGLE_API_URL+"?q=" + query
@@ -45,7 +44,7 @@ public class BookInfoService {
 					+ "&maxResults="+MAX_RESULTS_PER_PAGE
 					+ "&startIndex="+ page*10;
 
-			LOG.info("Calling Google API with Query"+ query);
+			LOG.info("Calling Google API with Query Key "+ query);
 			
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
@@ -56,7 +55,7 @@ public class BookInfoService {
 
 			ObjectMapper objMapper = new ObjectMapper();
 			resp = objMapper.readValue(responseJson, BookInfoSearchResponse.class);
-			LOG.info("Got the response with" + resp.getTotalItems()+ " records");
+			LOG.info("Got the response with " + resp.getTotalItems()+ " records");
 
 			for(int i=0; i< resp.getTotalItems(); i++) {
 				BookItem item = resp.getItems().get(i);
@@ -66,7 +65,7 @@ public class BookInfoService {
 		} catch (Exception e) {
 			responseJson = "{'error', '" + e.getMessage() + "'}";
 			
-			LOG.error(responseJson);
+			LOG.error("Error: " + responseJson);
 			e.printStackTrace();
 		}
 		return  resp;    
@@ -77,7 +76,6 @@ public class BookInfoService {
 		BookInfoSearchResponse resp = new BookInfoSearchResponse();
 
 		List<BookItem> items = new ArrayList<BookItem>();
-		System.out.println("BookIds: "+ bookids);
 		String responseJson = "";
 		try {
 			ObjectMapper objMapper = new ObjectMapper();
@@ -94,7 +92,7 @@ public class BookInfoService {
 					String url = GOOGLE_API_URL + "/"+ bookids.get(i)
 						+ "?key="+GOOGLE_API_KEY;
 					
-						LOG.info("Calling Google API with Query"+ bookids.get(i));
+						LOG.info("Calling Google API with Query Key "+ bookids.get(i));
 
 					HttpClient client = HttpClient.newHttpClient();
 					HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
@@ -103,7 +101,7 @@ public class BookInfoService {
 					response = client.send(request, BodyHandlers.ofString());
 					responseJson = response.body();
 
-					LOG.info("Got the Response JSON :" + responseJson);
+					LOG.info("Got the Response JSON : " + responseJson);
 					
 					BookItem item = objMapper.readValue(responseJson, BookItem.class);
 					items.add(item);
@@ -116,7 +114,7 @@ public class BookInfoService {
 
 		} catch (Exception e) {
 			responseJson = "{'error', '" + e.getMessage() + "'}";
-			LOG.error(responseJson);
+			LOG.error("Error: "responseJson);
 			e.printStackTrace();
 		}
 		resp.setTotalItems(items.size());
