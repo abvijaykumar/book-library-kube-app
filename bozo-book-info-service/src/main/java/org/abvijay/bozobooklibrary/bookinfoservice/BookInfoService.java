@@ -114,7 +114,7 @@ public class BookInfoService {
 
 		} catch (Exception e) {
 			responseJson = "{'error', '" + e.getMessage() + "'}";
-			LOG.error("Error: "responseJson);
+			LOG.error("Error: " + responseJson);
 			e.printStackTrace();
 		}
 		resp.setTotalItems(items.size());
