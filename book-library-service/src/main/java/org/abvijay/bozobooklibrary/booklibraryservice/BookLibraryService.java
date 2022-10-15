@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.jboss.logging.Logger;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -35,15 +36,16 @@ public class BookLibraryService {
     public Response addBook(@PathParam("userid") String userId, @PathParam("bookid") String bookId) {
         try {
             BookLibrary book = new BookLibrary();
+            LOG.Info("Adding Book UserId " + userId + " bookId " + bookId);
             book.setBookID(bookId);
             book.setUserID(userId);
             System.out.println("UserId " + book.getUserID() + " bookId " + book.getBookID());
             book.persist();
             return Response.ok("success", MediaType.TEXT_PLAIN).build();
         } catch (Exception e) {
-            System.out.println("Exception " + e.getMessage());
-            return Response.serverError().type(MediaType.APPLICATION_JSON).entity("{" + e.getMessage() + "}").build();
-
+            String responseJson = Response.serverError().type(MediaType.APPLICATION_JSON).entity("{" + e.getMessage() + "}").build();
+			LOG.error("Error: " + responseJson);
+            return responseJson;
         }
     }
 
@@ -53,7 +55,7 @@ public class BookLibraryService {
     public Response deleteBook(@PathParam("userid") String userId, @PathParam("bookid") String bookId) {
         try {
             
-            System.out.println("Deleting UserId " + userId + " bookId " + bookId);
+            LOG.Info("Deleting UserId " + userId + " bookId " + bookId);
             
             Map<String,String> params=new HashMap<>();
             params.put("userID",userId);
@@ -63,9 +65,9 @@ public class BookLibraryService {
 
             return Response.ok("success", MediaType.TEXT_PLAIN).build();
         } catch (Exception e) {
-            System.out.println("Exception " + e.getMessage());
-            return Response.serverError().type(MediaType.APPLICATION_JSON).entity("{" + e.getMessage() + "}").build();
-
+            String responseJson = Response.serverError().type(MediaType.APPLICATION_JSON).entity("{" + e.getMessage() + "}").build();
+			LOG.error("Error: " + responseJson);
+            return responseJson;
         }
     }
 }
