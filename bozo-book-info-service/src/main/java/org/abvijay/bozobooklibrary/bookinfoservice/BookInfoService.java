@@ -52,7 +52,7 @@ public class BookInfoService {
 			HttpResponse<String> response;
 			response = client.send(request, BodyHandlers.ofString());
 			responseJson = response.body();
-			LOG.info("Got the response JSON " + responseJson);
+
 			ObjectMapper objMapper = new ObjectMapper();
 			resp = objMapper.readValue(responseJson, BookInfoSearchResponse.class);
 			LOG.info("Got the response with " + resp.getTotalItems()+ " records");
