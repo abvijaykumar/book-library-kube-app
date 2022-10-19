@@ -54,7 +54,7 @@ jobs:
       with:
         status: ${{ job.status }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        notification_title: 'Starting Build " ${{ BUILD_NUMBER }}'
+        notification_title: "Starting Build " ${{BUILD_NUMBER}}"
         message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
         footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
         notify_when: "failure, success, warning"
