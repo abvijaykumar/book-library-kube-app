@@ -17,7 +17,7 @@ on:
 
   workflow_dispatch:
     name:
-      description: 'Test scenario tags'  
+      description: 'BozoBookInfo Service workflow'  
 # Environment variables available to all jobs and steps in this workflow
 env:
   GITHUB_SHA: ${{ github.sha }}
