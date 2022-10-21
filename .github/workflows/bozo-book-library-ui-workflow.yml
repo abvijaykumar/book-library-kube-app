@@ -35,6 +35,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Build Status Slack Notification
+      uses: ravsamhq/notify-slack-action@v2
+      if: always()
+      with:
+        status: ${{ job.status }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        notification_title: "Starting the BozoBookLibrary UI ReactJS Build: {status_message}"
+        message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+        footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
+        notify_when: "failure, success, warning"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
+
+
     - name: Generate build number
       uses: einaregilsson/build-number@v3
       with:
@@ -48,13 +62,33 @@ jobs:
       run: |
         cd bozo-book-library-ui
         ls -la
+        echo "Before Docker Build"
+        docker images
         docker build . -t $DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+        echo "After Docker Build"
+        docker images
+    
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:
         username: ${{secrets.DOCKERHUB_USERNAME}}
         password: ${{secrets.DOCKERHUB_PASSWORD}}
 
-    - name: Push the image to DockerHub
+    # Push the image to Dockerhub
+    - name: Push the image to Dockerhub
       run: |
-        docker push $DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+        docker image tag $IMAGE_NAME:$BUILD_NUMBER docker.io/$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+        docker image push docker.io/$DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+
+    - name: BuiDocker Build & Push  Status Slack Notification
+      uses: ravsamhq/notify-slack-action@v2
+      if: always()
+      with:
+        status: ${{ job.status }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        notification_title: "Docker Build & Push Status: {status_message}"
+        message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+        footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
+        notify_when: "failure, success, warning"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
