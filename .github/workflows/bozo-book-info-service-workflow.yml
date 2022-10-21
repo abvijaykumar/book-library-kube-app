@@ -20,8 +20,6 @@ on:
       description: 'BozoBookInfo Service workflow'  
 # Environment variables available to all jobs and steps in this workflow
 env:
-  GITHUB_SHA: ${{ github.sha }}
-  ICR_NAMESPACE: ${{ secrets.ICR_NAMESPACE }}
   REGISTRY_HOSTNAME: docker.io
   DOCKER_USERNAME: abvijaykumar
   IMAGE_NAME: bozo-book-info-service
