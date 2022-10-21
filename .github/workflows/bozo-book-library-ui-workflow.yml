@@ -92,3 +92,25 @@ jobs:
         notify_when: "failure, success, warning"
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
+
+    - name: Invoke book-info-service Infra GitOps pipe
+      run: |
+          curl -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Authorization: token ${{secrets.API_TOKEN_GITHUB}}" \
+          --request POST \
+          --data '{"event_type": "deploy-bozo-book-library-ui-service-Infra-updated-build", \ 
+          "client_payload": { "buildnumber": "'"$BUILD_NUMBER"'" }}' \
+          https://api.github.com/repos/abvijaykumar/book-library-kube-infra/dispatches
+
+    - name: Invoked Infra Workflow Slack Notification
+      uses: ravsamhq/notify-slack-action@v2
+      if: always()
+      with:
+        status: ${{ job.status }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        notification_title: "Infra Workflow trigger Status: {status_message}"
+        message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+        footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
+        notify_when: "failure, success, warning"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
