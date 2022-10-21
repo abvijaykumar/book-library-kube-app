@@ -64,7 +64,7 @@ jobs:
         ls -la
         echo "Before Docker Build"
         docker images
-        docker build . -t $DOCKER_USERNAME/$IMAGE_NAME:$BUILD_NUMBER
+        docker build . -t $IMAGE_NAME:$BUILD_NUMBER
         echo "After Docker Build"
         docker images
     
