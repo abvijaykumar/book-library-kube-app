@@ -92,7 +92,7 @@ public class BookInfoService {
 					String url = GOOGLE_API_URL + "/"+ bookids.get(i)
 						+ "?key="+GOOGLE_API_KEY;
 					
-					LOG.info("Calling Google API with Query Key "+ bookids.get(i));
+					LOG.info("Calling Google API with Query Key: "+ bookids.get(i));
 
 					HttpClient client = HttpClient.newHttpClient();
 					HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
