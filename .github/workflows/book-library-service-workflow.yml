@@ -21,14 +21,9 @@ on:
 # Environment variables available to all jobs and steps in this workflow
 env:
   GITHUB_SHA: ${{ github.sha }}
-  IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
-  IBM_CLOUD_REGION: jp-tok
-  ICR_NAMESPACE: ${{ secrets.ICR_NAMESPACE }}
   REGISTRY_HOSTNAME: docker.io
   DOCKER_USERNAME: abvijaykumar
   IMAGE_NAME: bozo-book-library-service
-  IKS_CLUSTER: kvijay-kube-new-cluster
-  DEPLOYMENT_NAME: iks-test
   PORT: 5001
 
 jobs:
@@ -63,7 +58,7 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
 
 
-    - name: Build with Native Image and Dcokerizing it
+    - name: Build with Native Image and Dockerizing it
       run: |
         cd book-library-service
         ./mvnw package -Dnative
@@ -108,7 +103,7 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.GITOPS_SLACK_API }}
    
-    - name: Invoke book-info-service Infra GitOps pipe
+    - name: Invoke book-library-service Infra GitOps pipe
       run: |
           curl -H "Accept: application/vnd.github.everest-preview+json" \
           -H "Authorization: token ${{secrets.API_TOKEN_GITHUB}}" \
