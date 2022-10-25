@@ -9,7 +9,7 @@ import firebase from 'firebase';
     storageBucket: "bozo-book-library.appspot.com",
     messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
-    measurementId: REACT_APP_FIREBASE_MEASUREMENT_ID
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
   };
   // Initialize Firebase
   const fire = firebase.initializeApp(firebaseConfig);
