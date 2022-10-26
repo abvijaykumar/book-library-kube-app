@@ -11,7 +11,11 @@ import firebase from 'firebase';
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
   };
+
+  console.info(firebaseConfig)
   // Initialize Firebase
   const fire = firebase.initializeApp(firebaseConfig);
+
+  
   
   export default fire;
