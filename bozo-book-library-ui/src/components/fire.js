@@ -12,7 +12,6 @@ import firebase from 'firebase';
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
   };
 
-  console.info(firebaseConfig)
   // Initialize Firebase
   const fire = firebase.initializeApp(firebaseConfig);
 

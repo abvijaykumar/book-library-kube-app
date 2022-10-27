@@ -102,11 +102,17 @@ const BookList = () => {
                                     <table >
                                         <tr>
                                             <td>
-                                                <button name="Prev" class="u-border-2 u-border-grey-25 u-btn u-btn-rectangle u-button-style u-none u-text-body-color u-btn-1" onClick={previousPage}>Previous Page</button>
+                                                <button name="Prev" 
+                                                        class="u-border-2 u-border-grey-25 u-btn u-btn-rectangle u-button-style u-none u-text-body-color u-btn-1" 
+                                                        onClick={previousPage}>
+                                                            Previous Page</button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <button name="Next" class="u-border-2 u-border-grey-25 u-btn u-btn-rectangle u-button-style u-none u-text-body-color u-btn-1" onClick={nextPage}>Next Page </button>
+                                                <button name="Next" 
+                                                        class="u-border-2 u-border-grey-25 u-btn u-btn-rectangle u-button-style u-none u-text-body-color u-btn-1" 
+                                                        onClick={nextPage}>
+                                                            Next Page </button>
                                             </td>
                                         </tr>
                                     </table>
@@ -121,7 +127,11 @@ const BookList = () => {
                                             }
                                             return (
                                                 <div>
-                                                    <Book bookId={volume.id} bookname={volume.volumeInfo.title} bookdescription={volume.volumeInfo.description} author={volume.volumeInfo.authors} imageLink={thumbnail} removeButton={false} />
+                                                    <Book bookId={volume.id} 
+                                                            bookname={volume.volumeInfo.title} 
+                                                            bookdescription={volume.volumeInfo.description} 
+                                                            author={volume.volumeInfo.authors} 
+                                                            imageLink={thumbnail} removeButton={false} />
                                                 </div>)
                                         })}
                                     </div>
