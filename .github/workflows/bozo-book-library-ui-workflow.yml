@@ -97,8 +97,7 @@ jobs:
           curl -H "Accept: application/vnd.github.everest-preview+json" \
           -H "Authorization: token ${{secrets.API_TOKEN_GITHUB}}" \
           --request POST \
-          --data '{"event_type": "deploy-bozo-book-library-ui-service-Infra-updated-build", \ 
-          "client_payload": { "buildnumber": "'"$BUILD_NUMBER"'" }}' \
+          --data '{"event_type": "deploy-bozo-book-library-ui-service-Infra-updated-build", "client_payload": { "buildnumber": "'"$BUILD_NUMBER"'" }}' \
           https://api.github.com/repos/abvijaykumar/book-library-kube-infra/dispatches
 
     - name: Invoked Infra Workflow Slack Notification
