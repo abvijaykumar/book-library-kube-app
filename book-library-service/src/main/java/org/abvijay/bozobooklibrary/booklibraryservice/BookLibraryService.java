@@ -16,10 +16,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
+
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/booklib")
 public class BookLibraryService {
+    
+    private static final Logger LOG = Logger.getLogger(BookLibraryService.class);
 
     @GET
     @Path("/get/{userId}")
