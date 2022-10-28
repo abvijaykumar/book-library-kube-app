@@ -1,10 +1,8 @@
 package org.abvijay.bozobooklibrary.booklibraryservice;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,11 +11,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
-
-
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/booklib")
 public class BookLibraryService {
@@ -46,7 +42,7 @@ public class BookLibraryService {
             book.persist();
             return Response.ok("success", MediaType.TEXT_PLAIN).build();
         } catch (Exception e) {
-            String responseJson = Response.serverError().type(MediaType.APPLICATION_JSON).entity("{" + e.getMessage() + "}").build();
+            Response responseJson = Response.serverError().type(MediaType.APPLICATION_JSON).entity("{" + e.getMessage() + "}").build();
 			LOG.error("Error: " + responseJson);
             return responseJson;
         }
@@ -57,9 +53,9 @@ public class BookLibraryService {
     @Transactional
     public Response deleteBook(@PathParam("userid") String userId, @PathParam("bookid") String bookId) {
         try {
-            
+
             LOG.info("Deleting UserId " + userId + " bookId " + bookId);
-            
+
             Map<String,String> params=new HashMap<>();
             params.put("userID",userId);
             params.put("bookID",bookId);
@@ -68,7 +64,7 @@ public class BookLibraryService {
 
             return Response.ok("success", MediaType.TEXT_PLAIN).build();
         } catch (Exception e) {
-            String responseJson = Response.serverError().type(MediaType.APPLICATION_JSON).entity("{" + e.getMessage() + "}").build();
+            Response responseJson = Response.serverError().type(MediaType.APPLICATION_JSON).entity("{" + e.getMessage() + "}").build();
 			LOG.error("Error: " + responseJson);
             return responseJson;
         }
