@@ -39,7 +39,7 @@ public class BookLibraryService {
     public Response addBook(@PathParam("userid") String userId, @PathParam("bookid") String bookId) {
         try {
             BookLibrary book = new BookLibrary();
-            LOG.Info("Adding Book UserId " + userId + " bookId " + bookId);
+            LOG.info("Adding Book UserId " + userId + " bookId " + bookId);
             book.setBookID(bookId);
             book.setUserID(userId);
             System.out.println("UserId " + book.getUserID() + " bookId " + book.getBookID());
@@ -58,7 +58,7 @@ public class BookLibraryService {
     public Response deleteBook(@PathParam("userid") String userId, @PathParam("bookid") String bookId) {
         try {
             
-            LOG.Info("Deleting UserId " + userId + " bookId " + bookId);
+            LOG.info("Deleting UserId " + userId + " bookId " + bookId);
             
             Map<String,String> params=new HashMap<>();
             params.put("userID",userId);
