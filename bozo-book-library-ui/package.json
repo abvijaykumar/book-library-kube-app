@@ -8,6 +8,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@opentelemetry/exporter-collector": "^0.25.0",
     "firebase": "^8.3.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -44,7 +45,6 @@
   "devDependencies": {
     "@opentelemetry/api": "^1.2.0",
     "@opentelemetry/context-zone": "^1.7.0",
-    "@opentelemetry/exporter-collector": "file:0.25.0@opentelemetry/instrumentation-fetch@0.25.0",
     "@opentelemetry/instrumentation-fetch": "^0.33.0"
   }
 }
