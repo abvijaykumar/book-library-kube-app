@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 
 import { WebTracerProvider } from '@opentelemetry/sdk-trace-web';
 import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
-const { Resource } = require('@opentelemetry/resources');
+
 
 import './App.css';
 import './components/Book-Catalogue.css';
@@ -10,6 +10,8 @@ import './components/Book-Catalogue.css';
 
 import Home from './components/Home';
 import {CurrentUserContext} from './components/CurrentUserContext';
+
+const { Resource } = require('@opentelemetry/resources');
 
 const serviceName = "bozo-book-ui";
 const resource = new Resource({ "service.name": serviceName });
