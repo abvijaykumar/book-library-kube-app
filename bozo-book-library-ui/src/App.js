@@ -1,12 +1,17 @@
 import React, { useState, useMemo } from 'react';
 
+import { WebTracerProvider } from '@opentelemetry/sdk-trace-web';
+import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
+const { Resource } = require('@opentelemetry/resources');
+
 import './App.css';
 import './components/Book-Catalogue.css';
+
 
 import Home from './components/Home';
 import {CurrentUserContext} from './components/CurrentUserContext';
 
-const serviceName = "sample-react-app";
+const serviceName = "bozo-book-ui";
 const resource = new Resource({ "service.name": serviceName });
 const provider = new WebTracerProvider({ resource });
 const collector = new CollectorTraceExporter({
