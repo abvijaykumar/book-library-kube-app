@@ -13,11 +13,13 @@ import {CurrentUserContext} from './components/CurrentUserContext';
 
 const { Resource } = require('@opentelemetry/resources');
 
+const REACT_APP_OTEL_URL = process.env.REACT_APP_OTEL_URL;
+
 const serviceName = "bozo-book-ui";
 const resource = new Resource({ "service.name": serviceName });
 const provider = new WebTracerProvider({ resource });
 const collector = new CollectorTraceExporter({
-  url: "http://opentelemetry-opentelemetry-collector.opentelemetry.svc.cluster.local:4318/v1/traces",
+  url: REACT_APP_OTEL_URL,
 });
 
 const App = () => {
