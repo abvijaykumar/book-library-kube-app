@@ -19,14 +19,12 @@ const Library = (props) => {
         getLibraryBooks();
     }, [currentPage, searchQuery]);
 
-    //const BOOK_INFO_SERVICE_URL = process.env.REACT_APP_BOOK_INFO_SERVICE_URL
-    const BOOK_LIB_SERVICE_URL = "https://" + window.location.hostname + "/booklib";
-    //const BOOK_LIB_SERVICE_URL= process.env.REACT_APP_BOOK_LIB_SERVICE_URL + '/booklib'
-
+    const BOOK_SERVICE_URL = "https://" + window.location.hostname;
+    
     const getBooks = (bookids) => {
         var bookidsJson = JSON.stringify(bookids);
         console.log("bookidsJson "+ bookidsJson);
-        fetch(BOOK_INFO_SERVICE_URL+'/bookinfo/graphql', {
+        fetch(BOOK_SERVICE_URL+'/bookinfo/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -63,7 +61,7 @@ const Library = (props) => {
 
 
     const getLibraryBooks = () => {
-        fetch(BOOK_LIB_SERVICE_URL+'/get/'+user)
+        fetch(BOOK_SERVICE_URL+'/booklib/get/'+user)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
