@@ -6,8 +6,6 @@ import reportWebVitals from './reportWebVitals';
 
 import { WebTracerProvider } from '@opentelemetry/sdk-trace-web';
 import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
-import Home from './components/Home';
-import {CurrentUserContext} from './components/CurrentUserContext';
 const { Resource } = require('@opentelemetry/resources');
 
 const REACT_APP_OTEL_URL = process.env.REACT_APP_OTEL_URL;

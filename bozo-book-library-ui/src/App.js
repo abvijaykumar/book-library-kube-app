@@ -1,14 +1,10 @@
 import React, { useState, useMemo } from 'react';
 
-
-
 import './App.css';
 import './components/Book-Catalogue.css';
 
-
-
-
-
+import Home from './components/Home';
+import {CurrentUserContext} from './components/CurrentUserContext';
 
 const App = () => {
   const [user, setUser] = useState(null);
