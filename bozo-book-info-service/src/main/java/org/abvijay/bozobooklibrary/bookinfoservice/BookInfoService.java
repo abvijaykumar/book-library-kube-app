@@ -18,6 +18,9 @@ import org.abvijay.bozobooklibrary.bookinfoservice.objects.BookItem;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tags;
+
 @Path("/bookinfo")
 public class BookInfoService {
 
@@ -25,6 +28,9 @@ public class BookInfoService {
 
 	@Inject
     RedisClient redisClient;
+
+	@Inject
+    MeterRegistry registry;
 
 	@ConfigProperty(name = "book.info.service.google.book.api.url")
 	String GOOGLE_API_URL;
@@ -38,6 +44,9 @@ public class BookInfoService {
 	public BookInfoSearchResponse searchByKeyword(String query, int page) {
 		BookInfoSearchResponse resp = new BookInfoSearchResponse();
 		String responseJson = "";
+
+		registry.counter("searchByKeyword() Counter", Tags.of("keyword", query)).increment();
+
 		try {
 			String url = GOOGLE_API_URL+"?q=" + query
 					+ "&key=" + GOOGLE_API_KEY
