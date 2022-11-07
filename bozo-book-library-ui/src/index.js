@@ -4,31 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { MetricsProvider } from '@cabify/prom-react';
-
-const normalizePath = (path: string) => {
-  const match = path.match(/\/products\/(\d+)/);
-  if (match) {
-    return `/products/:id`;
-  }
-  return path;
-};
-
-const AppRoot = () => (
-  <MetricsProvider
-    appName="my-app-name"
-    owner="my-team"
-    getNormalizedPath={normalizePath}
-    metricsAggregatorUrl="https://some-metrics-aggregator.com/push-metrics"
-  >
-    <OtherProviders>
-      <App />
-    </OtherProviders>
-  </MetricsProvider>
-);
 
 ReactDOM.render(
-    <AppRoot />,
+    <App />,
   document.getElementById('root')
 );
 
