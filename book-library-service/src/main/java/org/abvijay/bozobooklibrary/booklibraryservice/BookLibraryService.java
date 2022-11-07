@@ -1,8 +1,10 @@
 package org.abvijay.bozobooklibrary.booklibraryservice;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -19,6 +21,9 @@ import org.jboss.logging.Logger;
 public class BookLibraryService {
     
     private static final Logger LOG = Logger.getLogger(BookLibraryService.class);
+
+    @Inject
+    MeterRegistry registry;
 
     @GET
     @Path("/get/{userId}")
