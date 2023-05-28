@@ -39,8 +39,6 @@ public class BookLibraryService {
     @Transactional
     public Response addBook(@PathParam("userid") String userId, @PathParam("bookid") String bookId) {
         try {
-            
-
             BookLibrary book = new BookLibrary();
             LOG.info("Adding Book UserId " + userId + " bookId " + bookId);
             book.setBookID(bookId);
