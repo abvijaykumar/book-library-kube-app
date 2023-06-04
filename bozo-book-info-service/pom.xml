@@ -77,10 +77,10 @@
       <artifactId>quarkus-micrometer-registry-prometheus</artifactId>
     </dependency>
 
-    <dependency>
+  <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-opentelemetry</artifactId>
-    </dependency>
+      <artifactId>quarkus-smallrye-opentracing</artifactId>
+  </dependency>
 
   </dependencies>
   <build>
