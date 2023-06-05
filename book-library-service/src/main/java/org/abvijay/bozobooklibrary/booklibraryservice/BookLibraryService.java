@@ -15,8 +15,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import javax.ws.rs.core.Response;
+import org.eclipse.microprofile.opentracing.Traced;
 import org.jboss.logging.Logger;
 
+@Traced
 @Path("/booklib")
 public class BookLibraryService {
     

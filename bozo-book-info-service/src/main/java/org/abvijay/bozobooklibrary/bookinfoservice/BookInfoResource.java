@@ -6,8 +6,9 @@ import javax.inject.Inject;
 import org.abvijay.bozobooklibrary.bookinfoservice.objects.BookInfoSearchResponse;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Query;
+import org.eclipse.microprofile.opentracing.Traced;
 
-
+@Traced
 @GraphQLApi
 public class BookInfoResource {
     @Inject 

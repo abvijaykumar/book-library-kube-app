@@ -16,11 +16,13 @@ import javax.ws.rs.Path;
 import org.abvijay.bozobooklibrary.bookinfoservice.objects.BookInfoSearchResponse;
 import org.abvijay.bozobooklibrary.bookinfoservice.objects.BookItem;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.opentracing.Traced;
 import org.jboss.logging.Logger;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 
+@Traced
 @Path("/bookinfo")
 public class BookInfoService {
 
