@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
+import org.eclipse.microprofile.opentracing.Traced;
+
+@Traced
 @ApplicationScoped
 @Unremovable
 @Named("booklibrary-db-credentials-provider")
