@@ -11,8 +11,6 @@ import BookList from './BookList';
 import Library from './Library';
 import {CurrentUserContext} from './CurrentUserContext';
 
-import { initTracer } from 'jaeger-client';
-
 
 const Home = () => {
     const { user } = useContext(CurrentUserContext);
