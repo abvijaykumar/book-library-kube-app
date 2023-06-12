@@ -5,8 +5,20 @@ import './nicepage.css'
 import SearchField from "react-search-field";
 import { CurrentUserContext } from './CurrentUserContext';
 
-var resultObject = null;
+import { initTracer } from 'jaeger-client';
+const config = {
+  serviceName: 'bozo-book-library-react-app',
+  sampler: {
+    type: 'const',
+    param: 1,
+  },
+  reporter: {
+    logSpans: true,
+  },
+};
+const tracer = initTracer(config);
 
+var resultObject = null;
 
 const BookList = () => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -24,6 +36,8 @@ const BookList = () => {
     }, [currentPage, searchQuery]);
 
     const queryService = () => {
+        const parentSpan = tracer.startSpan('queryService');
+
         fetch(REACT_APP_BOOK_INFO_SERVICE_URL + '/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -52,8 +66,10 @@ const BookList = () => {
                 console.log("Received the response...");
                 setSearchResponse("received");
                 setSearchResulTotalCount(resultObject.search.totalItems);
+                parentSpan.finish();
           }).catch((error) => {
             console.error('Error:', error);
+            parentSpan.finish();
         });
     }
 
