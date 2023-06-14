@@ -24,7 +24,6 @@ const exporter = new CollectorTraceExporter({
   url: process.env.TRACE_BACKEND_ENDPOINT,
 });
 
-print(process.env.TRACE_BACKEND_ENDPOINT);
 
 // Create a batch span processor for sending spans in batches
 const processor = new BatchSpanProcessor(exporter);

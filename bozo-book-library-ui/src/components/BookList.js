@@ -25,7 +25,7 @@ const BookList = () => {
     }, [currentPage, searchQuery]);
 
     const queryService = () => {
-        const span = trace.getTracer('your-tracer-name').startSpan('fetchData');
+        const span = trace.getTracer('bozo-book-library').startSpan('queryService');
 
         fetch(REACT_APP_BOOK_INFO_SERVICE_URL + '/graphql', {
             method: 'POST',
