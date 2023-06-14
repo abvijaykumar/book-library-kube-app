@@ -42,7 +42,7 @@ function Book(props) {
     var buttonText = "Add to Library"
     if (props.author) { author = props.author.join() }
 
-    if (author == "") {author = "Not Available"}
+    if (author === "") {author = "Not Available"}
 
     if (props.removeButton) { buttonText = "Remove from Library" }
 
