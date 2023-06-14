@@ -5,7 +5,7 @@ import './nicepage.css'
 import SearchField from "react-search-field";
 import { CurrentUserContext } from './CurrentUserContext';
 
-import { trace } from '@opentelemetry/tracing';
+
 
 var resultObject = null;
 
@@ -25,7 +25,6 @@ const BookList = () => {
     }, [currentPage, searchQuery]);
 
     const queryService = () => {
-        const span = trace.getTracer('bozo-book-library').startSpan('queryService');
 
         fetch(REACT_APP_BOOK_INFO_SERVICE_URL + '/graphql', {
             method: 'POST',
@@ -55,10 +54,8 @@ const BookList = () => {
                 console.log("Received the response...");
                 setSearchResponse("received");
                 setSearchResulTotalCount(resultObject.search.totalItems);
-                span.end();
           }).catch((error) => {
             console.error('Error:', error);
-            span.end();
         });
     }
 
