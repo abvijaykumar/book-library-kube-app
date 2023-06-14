@@ -4,19 +4,18 @@ import './Book-Catalogue.css';
 import './nicepage.css'
 import SearchField from "react-search-field";
 import { CurrentUserContext } from './CurrentUserContext';
+import { trace } from '@opentelemetry/tracing';
 
-import { initTracer } from 'jaeger-client';
-const config = {
-  serviceName: 'bozo-book-library-react-app',
-  sampler: {
-    type: 'const',
-    param: 1,
-  },
-  reporter: {
-    logSpans: true,
-  },
-};
-const tracer = initTracer(config);
+function fetchData() {
+  
+
+  // Make your HTTP request or perform the desired operation here
+
+  span.end();
+}
+
+
+
 
 var resultObject = null;
 
@@ -36,7 +35,7 @@ const BookList = () => {
     }, [currentPage, searchQuery]);
 
     const queryService = () => {
-        const parentSpan = tracer.startSpan('queryService');
+        const span = trace.getTracer('get-book-information').startSpan('fetchData');
 
         fetch(REACT_APP_BOOK_INFO_SERVICE_URL + '/graphql', {
             method: 'POST',
@@ -66,10 +65,10 @@ const BookList = () => {
                 console.log("Received the response...");
                 setSearchResponse("received");
                 setSearchResulTotalCount(resultObject.search.totalItems);
-                parentSpan.finish();
+                span.end();
           }).catch((error) => {
             console.error('Error:', error);
-            parentSpan.finish();
+            span.end();
         });
     }
 
