@@ -4,18 +4,8 @@ import './Book-Catalogue.css';
 import './nicepage.css'
 import SearchField from "react-search-field";
 import { CurrentUserContext } from './CurrentUserContext';
-import { trace } from '@opentelemetry/tracing';
 
-function fetchData() {
-  
-
-  // Make your HTTP request or perform the desired operation here
-
-  span.end();
-}
-
-
-
+import { trace } .TRACE_BACKEND_ENDPOINT
 
 var resultObject = null;
 
@@ -35,7 +25,7 @@ const BookList = () => {
     }, [currentPage, searchQuery]);
 
     const queryService = () => {
-        const span = trace.getTracer('get-book-information').startSpan('fetchData');
+        const span = trace.getTracer('your-tracer-name').startSpan('fetchData');
 
         fetch(REACT_APP_BOOK_INFO_SERVICE_URL + '/graphql', {
             method: 'POST',

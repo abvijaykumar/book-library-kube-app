@@ -10,6 +10,7 @@ import Login from './Login';
 import BookList from './BookList';
 import Library from './Library';
 import {CurrentUserContext} from './CurrentUserContext';
+
 import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node';
 import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
@@ -20,8 +21,10 @@ const provider = new NodeTracerProvider();
 // Set the exporter configuration
 const exporter = new CollectorTraceExporter({
   serviceName: 'bozo-book-library-ui',
-  url: process.env.JAEGER_ENDPOINT,
+  url: process.env.TRACE_BACKEND_ENDPOINT,
 });
+
+print(process.env.TRACE_BACKEND_ENDPOINT);
 
 // Create a batch span processor for sending spans in batches
 const processor = new BatchSpanProcessor(exporter);
@@ -33,9 +36,10 @@ provider.addSpanProcessor(processor);
 provider.register();
 
 
+
 const Home = () => {
     const { user } = useContext(CurrentUserContext);
-
+    print(process.env.TRACE_BACKEND_ENDPOINT);
     return(
         <div className="App">
         {user ? (
