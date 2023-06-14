@@ -8,11 +8,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
-    "@opentelemetry/api": "^1.4.1",
-    "@opentelemetry/auto-instrumentations-node": "^0.37.1",
     "@opentelemetry/exporter-collector": "^0.25.0",
-    "@opentelemetry/sdk-metrics": "^1.14.0",
-    "@opentelemetry/sdk-node": "^0.40.0",
     "@opentelemetry/sdk-trace-base": "^1.14.0",
     "@opentelemetry/tracing": "^0.24.0",
     "firebase": "^8.3.3",
