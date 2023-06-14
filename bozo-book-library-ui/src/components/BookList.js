@@ -5,7 +5,7 @@ import './nicepage.css'
 import SearchField from "react-search-field";
 import { CurrentUserContext } from './CurrentUserContext';
 
-import { trace } .TRACE_BACKEND_ENDPOINT
+import { trace } from '@opentelemetry/tracing';
 
 var resultObject = null;
 
